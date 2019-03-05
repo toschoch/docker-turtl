@@ -18,7 +18,7 @@ Installation / Usage
 --------------------
 1. clone the repo:
 ```
-git clone <git-url>
+git clone https://github.com/toschoch/docker-turtl.git
 ```
 
 2. edit the secrets in the `.env` file
