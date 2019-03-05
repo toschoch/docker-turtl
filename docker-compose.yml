@@ -31,3 +31,13 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  postgres-ui:
+    container_name: postgres-ui
+    image: sosedoff/pgweb
+    ports:
+      - "8182:8181"
+    environment:
+      - DATABASE_URL=postgres://postgres-db:$POSTGRES_USER@postgres:5432/postgres?sslmode=disable
+    depends_on:
+      - postgres
