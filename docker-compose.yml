@@ -40,4 +40,5 @@ services:
     environment:
       - DATABASE_URL=postgres://postgres-db:$POSTGRES_USER@postgres:5432/postgres?sslmode=disable
     depends_on:
-      - postgres
+      postgres-db:
+        condition: service_healthy
