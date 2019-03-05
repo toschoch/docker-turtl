@@ -1,0 +1,33 @@
+version: '2.1'
+
+services:
+  turtl-server:
+    container_name: turtl
+    image: shocki/turtl
+    environment:
+      TURTL_DB_HOST: postgres-db
+      TURTL_DB_PORT: 5432
+      TURTL_DB_DATABASE: turtl
+      TURTL_DB_USER: $POSTGRES_USER
+      TURTL_DB_PASSWORD: $POSTGRES_PW
+      TURTL_APP_SECURE_HASH_SALT: abuHassN892MMn
+    ports:
+      - 8181:8181
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+
+  postgres-db:
+    container_name: postgres-db
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_PASSWORD: $POSTGRES_PW
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_DB: turtl
+    volumes:
+      - $DOCKER_DIR/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U turtl"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
